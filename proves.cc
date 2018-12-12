@@ -4,6 +4,7 @@ using namespace std;
 
 long long int contadorMerge = 0;
 long long int contadorQuick = 0;
+long long int contadorBubble = 0;
 
 int partition(vector<int> & a, int start, int end) {
     unsigned int pivot = a[start];
@@ -38,12 +39,13 @@ void quickSort(vector <int> & a, int p, int r) {
 }
 
 
-int entropia (vector <int> vector) {
+int entropia (vector <int> V) {
     int result = 0;
-    for (int p = 0; p < vector.size(); p++) {
+    int size = V.size();
+    for (int p = 0; p < size; p++) {
         int i = p + 1;
-        while(i < vector.size()) {
-            if(vector[p] > vector[i]) result ++;
+        while(i < size) {
+            if(V[p] > V[i]) ++result;
             ++i;
         }
     }
@@ -89,31 +91,66 @@ void merge_sort(vector<int>& v, int left, int right) {
     }
 }
 
-int main () {
-    
-    int n;
-    cin >> n;
-    for(int x = 0; x < n; x++) {
-        vector<int> aVector;
-        srand(time(NULL));
-        int y;
-        cin >> y;
-        for (int i = 0; i < y; i++) {
-            int b = rand() % (7 + x);
-            aVector.push_back(b);
+void bubbleSort(vector<int>& a) {
+      bool swapp = true;
+      while(swapp){
+        swapp = false;
+        for (size_t i = 0; i < a.size()-1; i++) {
+            if (a[i]>a[i+1] ){
+                ++contadorBubble;
+                a[i] += a[i+1];
+                a[i+1] = a[i] - a[i+1];
+                a[i] -=a[i+1];
+                swapp = true;
+            }
         }
+    }
+}
 
-        long long int entrop = entropia(aVector);
-        cout << "Entropia: " << entrop << endl << endl;
-        vector<int> bVector = aVector;
+int main () { 
+    int tamanyVector, n;
+    //cout << "Tamany del vector: ";
+    cin >> tamanyVector;
+    //cout << "Nombre de vegades: ";
+    cin >> n;
+    for (int z = 0; z < n; ++z) {
+        for(int x = 0; x <= tamanyVector; x++) {
 
-        merge_sort(aVector, 0, aVector.size() - 1);
-        cout << "Crides merge: "  << contadorMerge << endl;
+            
+            vector<int> aVector(tamanyVector);
+            srand(time(NULL));
+            int valorsOrdenats = x;
+            
+            for (int i = 0; i < valorsOrdenats; ++i){
+                aVector[i] = i;
+            }
 
-        quickSort(bVector, 0, bVector.size());
-        cout << "Crides quick: " << contadorQuick << endl;
-        contadorMerge = 0;
-        contadorQuick = 0;
-        cout << endl << "---------------" << endl;
+            for (int i = valorsOrdenats; i < tamanyVector; i++) {
+                int b = rand() % (10000);
+                //cout << b << ' ';
+                aVector[i] = b;
+            }
+            //for (int i = 0; i < aVector.size(); ++i) cout << aVector[i] << ' ';
+            //cout << endl;
+            long long int entrop = entropia(aVector);
+            //cout << "Entropia: " << entrop << endl << endl;
+            vector<int> bVector = aVector;
+            vector<int> cVector = aVector;
+
+            //merge_sort(aVector, 0, aVector.size() - 1);
+            //cout << "Crides merge: "  << contadorMerge << endl;
+
+            quickSort(bVector, 0, bVector.size());
+            //cout << "Crides quick: " << contadorQuick << endl;
+            cout << entrop << ' ' << contadorQuick << endl;
+            contadorMerge = 0;
+            contadorQuick = 0;
+            contadorBubble = 0;
+
+            //bubbleSort(cVector);
+            //cout << "Crides bubble: " << contadorBubble << endl;
+
+            //cout << endl << "---------------" << endl;
+        }
     }
 }
