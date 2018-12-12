@@ -108,45 +108,50 @@ void bubbleSort(vector<int>& a) {
 }
 
 int main () { 
-    int n;
+    int tamanyVector, n;
+    cout << "Tamany del vector: ";
+    cin >> tamanyVector;
+    cout << "Nombre de vegades: ";
     cin >> n;
+    for (int z = 0; z < n; ++z) {
+        for(int x = 0; x < tamanyVector; x++) {
 
-    for(int x = 0; x <= n; x++) {
+            
+            vector<int> aVector(tamanyVector);
+            srand(time(NULL));
+            int valorsOrdenats = x;
+            
+            for (int i = 0; i < valorsOrdenats; ++i){
+                aVector[i] = i;
+            }
 
-        vector<int> aVector(n);
-        srand(time(NULL));
-        int tamanyVector = n;
-        int valorsOrdenats = x;
-        
-        for (int i = 0; i < valorsOrdenats; ++i){
-            aVector[i] = i;
+            for (int i = valorsOrdenats; i < tamanyVector; i++) {
+                int b = rand() % (10000);
+                //cout << b << ' ';
+                aVector[i] = b;
+            }
+            for (int i = 0; i < aVector.size(); ++i) cout << aVector[i] << ' ';
+            cout << endl;
+            long long int entrop = entropia(aVector);
+            cout << "Entropia: " << entrop << endl << endl;
+            vector<int> bVector = aVector;
+            vector<int> cVector = aVector;
+
+            //merge_sort(aVector, 0, aVector.size() - 1);
+            //cout << "Crides merge: "  << contadorMerge << endl;
+
+            quickSort(aVector, 0, aVector.size());
+            cout << "Crides quick: " << contadorQuick << endl;
+            //cout << entrop << ' ' << contadorQuick << endl;
+            contadorMerge = 0;
+            contadorQuick = 0;
+            contadorBubble = 0;
+            
+
+            //bubbleSort(cVector);
+            //cout << "Crides bubble: " << contadorBubble << endl;
+
+            cout << endl << "---------------" << endl;
         }
-
-        for (int i = valorsOrdenats; i < n; i++) {
-            int b = rand() % (10000);
-            //cout << b << ' ';
-            aVector[i] = b;
-        }
-        //for (int i = 0; i < aVector.size(); ++i) cout << aVector[i] << ' ';
-        //cout << endl;
-        long long int entrop = entropia(aVector);
-        //cout << "Entropia: " << entrop << endl << endl;
-        vector<int> bVector = aVector;
-        vector<int> cVector = aVector;
-
-        //merge_sort(aVector, 0, aVector.size() - 1);
-        //cout << "Crides merge: "  << contadorMerge << endl;
-
-        quickSort(bVector, 0, bVector.size());
-        //cout << "Crides quick: " << contadorQuick << endl;
-        cout << entrop << "    " << contadorQuick << endl;
-        contadorMerge = 0;
-        contadorQuick = 0;
-        contadorBubble = 0;
-
-        //bubbleSort(cVector);
-        //cout << "Crides bubble: " << contadorBubble << endl;
-
-        //cout << endl << "---------------" << endl;
     }
 }
